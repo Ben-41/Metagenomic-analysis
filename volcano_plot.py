@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import seaborn as sns
 from adjustText import adjust_text
 import pandas as pd
@@ -27,10 +28,11 @@ significantly_upregulated = df[(df['Fold Change'] > fold_change_threshold) & (df
 significantly_downregulated = df[(df['Fold Change'] < -fold_change_threshold) & (df['p-value'] < p_value_threshold)]
 
 # 绘制火山图
+matplotlib.rcParams['font.family'] = 'Arial'
 plt.figure(figsize=(10, 6))
-plt.scatter(df['Fold Change'], -np.log10(df['p-value']), color='gray', alpha=0.5)
-plt.scatter(significantly_upregulated['Fold Change'], -np.log10(significantly_upregulated['p-value']), color='red', label='Upregulated')
-plt.scatter(significantly_downregulated['Fold Change'], -np.log10(significantly_downregulated['p-value']), color='blue', label='Downregulated')
+plt.scatter(df['Fold Change'], -np.log10(df['p-value']), color='silver', alpha=1, edgecolors='black', linewidths=1)
+plt.scatter(significantly_upregulated['Fold Change'], -np.log10(significantly_upregulated['p-value']), color='red', label='Upregulated', edgecolors='black', linewidths=1)
+plt.scatter(significantly_downregulated['Fold Change'], -np.log10(significantly_downregulated['p-value']), color='darkblue', label='Downregulated', edgecolors='black', linewidths=1)
 plt.axvline(x=fold_change_threshold, color='gray', linestyle='--')
 plt.axvline(x=-fold_change_threshold, color='gray', linestyle='--')
 plt.axhline(y=-np.log10(p_value_threshold), color='gray', linestyle='--')
@@ -50,7 +52,8 @@ for i in significantly_downregulated.index:
                           pathway_names[i], color='blue'))
 
 # 调整标签位置，避免重叠
-adjust_text(texts, arrowprops=dict(arrowstyle='->', color='gray'))
+adjust_text(texts)
+# adjust_text(texts, arrowprops=dict(arrowstyle='->', color='gray'))
 
 plt.legend(loc='lower right')
 plt.savefig("/Users/ben/Documents/CDD/IBS/humann3_out/火山图.png",dpi=300)

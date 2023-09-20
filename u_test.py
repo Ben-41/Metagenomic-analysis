@@ -68,14 +68,15 @@ def U_test(group1,group2):
     return p_value
 
 if __name__ == "__main__":
-    # 读取CSV文件
+
+    # 读取CSV文件,第一行为sample title，第一列为pathway，数据为相对丰度
     filename = '/Users/ben/Documents/CDD/IBS/humann3_out/FC_unstratified_DATA.csv'  # 替换为你的CSV文件路径
     data = read_csv_file(filename)
 
     # 获取样本列表
     sample_list = read_txt_file("/Users/ben/Documents/CDD/IBS/humann3_out/FC_treatment_list.txt")
 
-    # 获取样本分组
+    # 获取样本分组信息，这里分为实验组和对照组
     sample_groups = get_sample_groups(data,sample_list)
 
     # 获得每组每个pathway的数据
@@ -89,13 +90,13 @@ if __name__ == "__main__":
         if group[1] in sample_list and group[1] not in k:
             k.append(group[1])
     print(len(k))
-    print(k)
+    print("control sample counts:", k)
 
     for group in sample_groups["experimental"]:
         if group[1] in sample_list and group[1] not in j:
             j.append(group[1])
     print(len(j))
-    print(j)
+    print("experimental sample counts:", j)
 
     for group in sample_groups["control"]:
         if group[1] in sample_list:
