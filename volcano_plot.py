@@ -30,7 +30,7 @@ significantly_downregulated = df[(df['Fold Change'] < -fold_change_threshold) & 
 # 绘制火山图
 matplotlib.rcParams['font.family'] = 'Arial'
 plt.figure(figsize=(10, 6))
-plt.scatter(df['Fold Change'], -np.log10(df['p-value']), color='silver', alpha=1, edgecolors='black', linewidths=1)
+plt.scatter(df['Fold Change'], -np.log10(df['p-value']), color='gainsboro', alpha=1)
 plt.scatter(significantly_upregulated['Fold Change'], -np.log10(significantly_upregulated['p-value']), color='red', label='Upregulated', edgecolors='black', linewidths=1)
 plt.scatter(significantly_downregulated['Fold Change'], -np.log10(significantly_downregulated['p-value']), color='darkblue', label='Downregulated', edgecolors='black', linewidths=1)
 plt.axvline(x=fold_change_threshold, color='gray', linestyle='--')
